@@ -12,6 +12,9 @@
    $price = 10.06; // type of double number
    $bool = true; // type of boolean
    
+   //Constant
+
+   define('NAME_CONSTANT','VALUE_CONSTANT')
    
    
 ?>
