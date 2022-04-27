@@ -1,0 +1,1 @@
+In the file variables.php, you will find examples of we can write a variables and constante
