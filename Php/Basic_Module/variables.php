@@ -4,7 +4,7 @@
           echo '<br/>';
           // This variable show where  the respository is localized
           echo "This is folder server: " .$_SERVER['DOCUMENT_ROOT'];
-
+          echo "<br/>"; 
 
           $name = 'Weslley Prado';// type of string
           $age = 27; // type of int number
