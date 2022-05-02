@@ -4,7 +4,7 @@
    //Acessing a array
    echo "This name belong to a array: " .$name[0];
    echo "<br/>";
-   echo $name[2];
+   echo "This name belong to a array too: " .$name[2];
 
    // Second way to create a array
 
@@ -14,4 +14,6 @@
 
    // Third way to create a array
    $array = ['Weslley', 'Laisa', 'Prado'];
+
+   echo "this is a array " .$array
 ?>
