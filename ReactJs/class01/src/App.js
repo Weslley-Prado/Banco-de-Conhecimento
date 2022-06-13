@@ -3,13 +3,14 @@ import { Component } from 'react';
 
 // function App() {
 
+
 class App extends Component {
   //constructor(props){} -> Sem constructor = field
   //super();
   //this.handlePClick = this.handlePClick.bind(this); //substuido por uma arrow function
   state = {
     // name:"Weslley Prado",
-    // counter: 0
+    counter: 0,
     posts: [
       {
         id: 1,
@@ -43,10 +44,38 @@ class App extends Component {
   //   this.setState({counter: counter + 1})
   // }
 
+  //Lifecycle
+
+  timeoutUpdate = null;
+
+  componentDidMount() {    
+    this.handleTimeout();  
+
+  }
+
+  handleTimeout = () => {
+    const {posts, counter } = this.state;
+    posts[0].title = "O titulo mudou"; 
+
+   this.timeoutUpdate = setTimeout(() => 
+    {this.setState({posts, counter: counter + 1
+    })
+  }, 1000);
+  }
+
+  componentDidUpdate() {
+    this.handleTimeout();  
+
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timeoutUpdate); //Esse método serve para limpar lixo da página
+
+  }
   render() {
     //const name = this.state.name;
     // const {name, counter} =  this.state;  // This is descructuring
-    const { posts } = this.state;
+    const { posts, counter } = this.state;
 
     return (
       <div className="App">
@@ -71,6 +100,7 @@ class App extends Component {
         {/* Toda vez que ver o map tem que informar a key  */}
         {posts.map(post => (
           <div key={post.id}>
+            <h1> {counter}</h1>
             <h1 >{post.title}</h1>
             <p> {post.body}</p>
           </div>
