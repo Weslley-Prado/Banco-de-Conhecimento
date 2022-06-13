@@ -10,24 +10,24 @@ class App extends Component {
   //this.handlePClick = this.handlePClick.bind(this); //substuido por uma arrow function
   state = {
     // name:"Weslley Prado",
-    counter: 0,
-    posts: [
-      {
-        id: 1,
-        title: "The title",
-        body: "The body"
-      },
-      {
-        id: 2,
-        title: "The title",
-        body: "The body"
-      },
-      {
-        id: 3,
-        title: "The title",
-        body: "The body"
-      }
-    ]
+    // counter: 0,
+    posts: []
+    //   {
+    //     id: 1,
+    //     title: "The title",
+    //     body: "The body"
+    //   },
+    //   {
+    //     id: 2,
+    //     title: "The title",
+    //     body: "The body"
+    //   },
+    //   {
+    //     id: 3,
+    //     title: "The title",
+    //     body: "The body"
+    //   }
+    // ]
   };
 
 
@@ -48,37 +48,57 @@ class App extends Component {
 
   timeoutUpdate = null;
 
-  componentDidMount() {    
-    this.handleTimeout();  
+  componentDidMount() {
+    // this.handleTimeout();  
+    this.loadPosts()
 
   }
 
-  handleTimeout = () => {
-    const {posts, counter } = this.state;
-    posts[0].title = "O titulo mudou"; 
+  loadPosts = async () => {
+   const postsResponse = fetch('https://jsonplaceholder.typicode.com/posts')
+   const photosResponse = fetch('https://jsonplaceholder.typicode.com/photos')
 
-   this.timeoutUpdate = setTimeout(() => 
-    {this.setState({posts, counter: counter + 1
-    })
-  }, 1000);
+   const [posts, photos] = await Promise.all([postsResponse, photosResponse]);
+   const postsJson = await posts.json();
+   const photosJson = await photos.json();
+   //Unindo array pelo menor
+   const postsAndPhotos = postsJson.map((post, index) => {
+       return { ...post, cover: photosJson[index].url }
+   });
+
+   this.setState({posts: postsAndPhotos})
+   
   }
 
   componentDidUpdate() {
-    this.handleTimeout();  
+    // this.handleTimeout();  
 
   }
 
   componentWillUnmount() {
-    clearTimeout(this.timeoutUpdate); //Esse método serve para limpar lixo da página
+    // clearTimeout(this.timeoutUpdate); //Esse método serve para limpar lixo da página
 
   }
+
+
+  // handleTimeout = () => {
+  //   const {posts, counter } = this.state;
+  //   posts[0].title = "O titulo mudou"; 
+
+  //  this.timeoutUpdate = setTimeout(() => 
+  //   {this.setState({posts, counter: counter + 1
+  //   })
+  // }, 1000);
+  // }
+
   render() {
     //const name = this.state.name;
     // const {name, counter} =  this.state;  // This is descructuring
-    const { posts, counter } = this.state;
+    const { posts } = this.state;
 
     return (
-      <div className="App">
+      <section className='container'>     
+         <div className="posts">
 
 
         {/* <header className="App-header">
@@ -99,13 +119,18 @@ class App extends Component {
       </header> */}
         {/* Toda vez que ver o map tem que informar a key  */}
         {posts.map(post => (
-          <div key={post.id}>
-            <h1> {counter}</h1>
+          <div className='post'>
+          <img src = {post.cover} alt = {post.title} />
+          <div key={post.id} className="post-content">
             <h1 >{post.title}</h1>
             <p> {post.body}</p>
           </div>
+
+      </div>
         ))}
       </div>
+      </section>
+
     );
   }
 }
