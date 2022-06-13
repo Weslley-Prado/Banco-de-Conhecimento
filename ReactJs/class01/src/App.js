@@ -1,5 +1,6 @@
 import './App.css';
 import { Component } from 'react';
+import { PostCard } from './components/PostCard';
 
 // function App() {
 
@@ -119,14 +120,13 @@ class App extends Component {
       </header> */}
         {/* Toda vez que ver o map tem que informar a key  */}
         {posts.map(post => (
-          <div className='post'>
-          <img src = {post.cover} alt = {post.title} />
-          <div key={post.id} className="post-content">
-            <h1 >{post.title}</h1>
-            <p> {post.body}</p>
-          </div>
-
-      </div>
+          <PostCard 
+          key={post.id}
+          title={post.title}
+          body={post.body}
+          cover={post.cover}
+          id={post.id}
+          />
         ))}
       </div>
       </section>
